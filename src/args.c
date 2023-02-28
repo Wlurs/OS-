@@ -3,6 +3,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+
+
+// -------------------------------- Globals
+bool loop = true; 
+enum commands{cp, mv, dirname};
+// --------------------------------
+
+
 /*
  * 
 Scope: create a simple command line interpreter, able to interpret a set of internally-implemented commands.
@@ -44,6 +52,37 @@ void parseCommand(char* input){
         //handle dirname
         printf("Handeling command ... \n" );
     }
+    else if (strcmp(tok, "HELP") == 0 || strcmp(tok, "help") == 0)
+    {
+        //handle help
+        printf(" ------------------------------------------------------------------------------------\n");
+        printf("Commands available: \n" );
+        printf("NAME \t mv [OPTION] ... SOURCE DEST \n");
+        printf("DESCRIPTION /t Moves SOURCE to DEST\n");
+        printf("OPTIONS  -i /t prompt before overwrite\n");
+        printf("\t -t --target-directory=DIRECTORY \tmove all SOURCE arguments into DIRECTORY\n");
+        printf("\t -S, --suffix=SUFFIX  override the usual backup suffix \n");
+        
+        printf(" ------------------------------------------------------------------------------------\n");
+        
+        printf("NAME \t  cp [OPTION]... SOURCE... DIRECTORY \n");
+        printf("DESCRIPTION /t Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.\n");
+        printf("OPTIONS  -i /t prompt before overwrite\n");
+        printf("\t -R, -r copy directories recursively\n");
+        printf("\t -t, --target-directory=DIRECTORY  copy all SOURCE arguments into DIRECTORY \n");
+        printf("\t -v,  explain what is being done\n");
+        
+        printf(" ------------------------------------------------------------------------------------\n");
+        
+        printf("NAME \t  dirname NAME \n");
+        printf("DESCRIPTION /t  Output each NAME with its last non-slash component and trailing slashes removed; if NAME contains no /'s, output '.' (meaning the current directory).\n");
+                
+        printf(" ------------------------------------------------------------------------------------\n");
+    }
+    else if (strcmp(tok, "exit") == 0)
+    {
+        loop = false;
+    }
     else 
     {
         //handle 'offending' command name. error
@@ -56,10 +95,7 @@ void parseCommand(char* input){
 
 // -------------------------------- FUNCTIONS 
 
-// -------------------------------- Globals
-bool loop = true; 
-enum commands{cp, mv, dirname};
-// --------------------------------
+
 int main(int argc, char**argv) {
         
     
